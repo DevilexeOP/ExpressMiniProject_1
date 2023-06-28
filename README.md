@@ -1,4 +1,4 @@
-# nodeExpressMiniProject_1
+# NodeExpress-MiniProject _1
 Using Node and Express , Trying to experiment stuff and play around with APIs  -
 
 About => This is a basic node express project 
