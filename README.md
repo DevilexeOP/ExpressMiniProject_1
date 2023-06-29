@@ -12,7 +12,7 @@ GOAL OF THIS MINI PROJECT :
 
 ## TO ADD SOME FUNCTIONALITY TO THIS MINI PROJECT 
 FORK THIS REPO AND CLONE 
-` git clone  https://github.com/<Your User Name>/nodeExpressMiniProject_1.git ` 
+` git clone  https://github.com/<Your User Name>/ExpressMiniProject_1.gitt ` 
 
 INSTALL THE DEPENDENCIES 
 ` npm i `
