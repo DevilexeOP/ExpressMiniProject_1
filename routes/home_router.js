@@ -6,7 +6,8 @@ const home_router = express.Router();
 
 home_router.use(bodyParser.json());
 
-// Get ROUTES
+//---------------------------------------- GET ROUTES ---------------------------------------//
+
 home_router.get("/", (req, res) => {
   res.send("I am on Home Page with Menu Items");
 });
@@ -15,7 +16,7 @@ home_router.get("/menu", (req, res) => {
   res.status(200).json(menu);
 });
 
-home_router.get("/menu/get-new-items", (req, res) => {
+home_router.get("/menu/get-recent", (req, res) => {
   const recentItems = menu[0]; // getting the item at 0  Index i.e first item
   if (recentItems) {
     res.status(201).send(recentItems);
@@ -65,36 +66,39 @@ home_router.get("/menu/pricing", (req, res) => {
     });
   if (itemPricing.length > 0) {
     // checking if it exists
-    res.status(200).json({ itemPricing }); 
+    res.status(200).json({ itemPricing });
   } else {
     res.status(404).send("No Price of items Found");
   }
 });
 
-// POST ROUTES
+//---------------------------------------- POST ROUTES ---------------------------------------//
+
 home_router.post("/menu/add-new-items", (req, res) => {
   const { itemName, price, ratings } = req.body;
 
   if (!itemName || !price || !ratings) {
     res.status(400).send("All 3 Fields are required"); // code 400 for bad request
   } else {
+    const newId = menu.length + 1;
     const newItem = {
       // creating a new object
-      id: Date.now(),
+      id: newId,
       itemName,
       price,
       ratings,
     };
     // unshift adds items at the start of array
+
     menu.unshift(newItem); // adding item to our own data.js file
 
     // pushing the data given by user to our own file
     fs.writeFile(
       "./data/items.js",
       `
-      items  = 
+      menu  = 
         ${JSON.stringify(menu)}
-      module.exports = items;
+      module.exports = menu;
       `,
       (err) => {
         if (err) {
@@ -105,6 +109,45 @@ home_router.post("/menu/add-new-items", (req, res) => {
         }
       }
     );
+  }
+});
+
+//---------------------------------------- PUT ROUTES ---------------------------------------//
+
+home_router.put("/menu/update-items/:id", (req, res) => {
+  const { id } = req.params;
+  const { itemName, price, ratings } = req.body;
+
+  if (!itemName || !price || !ratings) {
+    res.status(400).send("All fields are required to update");
+  } else {
+    // Find the index of the item to update in the menu array
+    const itemIndex = menu.findIndex((item) => item.id === parseInt(id));
+
+    if (itemIndex === -1) {
+      res.status(404).send("Item not found"); //sending error if the Id doesn't exist
+    } else {
+      // Update the menu properties
+      menu[itemIndex].itemName = itemName;
+      menu[itemIndex].price = price;
+      menu[itemIndex].ratings = ratings;
+
+      // updating the file
+      fs.writeFile(
+        "./data/items.js",
+        `items = ${JSON.stringify(menu)}
+        module.exports = items;
+        `,
+        (err) => {
+          if (err) {
+            console.log("Error updating Menu Items", err);
+            res.status(500).send("Server Error Couldnt update");
+          } else {
+            res.status(201).send("Update Created"); // 201 for successfully creating update req
+          }
+        }
+      );
+    }
   }
 });
 

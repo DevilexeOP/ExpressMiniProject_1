@@ -1,11 +1,5 @@
-let items = [
-  { id: 1687970704308, itemName: "Vada pav", price: "$1", ratings: "5/5" },
-  {
-    id: 1687970378816,
-    itemName: "Chicken Paneer Biryani",
-    price: "$19",
-    ratings: "4/5",
-  },
-  { id: 1687970147417, itemName: "Pannersrrrrrr", price: "$9", ratings: "4/5" },
+items = [
+  { id: 2, itemName: null, price: "$3", ratings: "3/5" },
+  { id: 1, itemName: "PavSEss", price: "$10", ratings: "2/5" },
 ];
 module.exports = items;
