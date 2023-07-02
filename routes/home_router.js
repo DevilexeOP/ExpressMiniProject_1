@@ -6,6 +6,11 @@ const home_router = express.Router();
 
 home_router.use(bodyParser.json());
 
+ //TODO Add delete route to delete specific menu item
+ // TODO Add specific put route for existing item 
+ // Eg itemName : Chicken , price : $3 , ratings : 4/5 ;
+ // in this we can update a specific property eg price 
+
 //---------------------------------------- GET ROUTES ---------------------------------------//
 
 home_router.get("/", (req, res) => {
